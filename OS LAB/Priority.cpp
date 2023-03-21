@@ -4,7 +4,7 @@ using namespace std;
 struct process
 {
     int id, burst_time, wait_time, comp_time, tat_time, priority;
-    process *next;
+    //process *next;
 };
 
 bool compare(process p1, process p2)
