@@ -1,82 +1,100 @@
 #include <iostream>
 using namespace std;
 
-int time_slice;
-
 struct process
 {
-    int id, burst_time, comp_time, wait_time, tat_time, resp_time;
+    string id;
+    int at;
+    int bt;
+    int res;
+    int wt;
+    int tat;
+    int ct;
+    int rt;
 };
 
-void round_robin(process pro[], int n)
+void rr(process p[], int n, int st)
 {
-    int time_taken = 0;
-    int total = 0;
-    int remaining_burst_time[n];
+
+    int tt = 0;
     for (int i = 0; i < n; i++)
     {
-        remaining_burst_time[i] = pro[i].burst_time;
-        total += pro[i].burst_time;
+        tt += p[i].bt;
     }
-
-    while (time_taken < total)
+    cout << endl
+         << "Gant Chart" << endl;
+    cout << "Pid\t"
+         << "Remaining Time\t"
+         << "start Time\t"
+         << "End Time" << endl;
+    int ct = 0;
+    while (ct < tt)
     {
+
         for (int i = 0; i < n; i++)
         {
-            if (remaining_burst_time[i] == pro[i].burst_time)
-                pro[i].resp_time = time_taken;
-            if (remaining_burst_time[i] > 0)
+
+            if (p[i].rt == p[i].bt)
+                p[i].res = ct;
+            if (p[i].rt > 0)
             {
-                if (remaining_burst_time[i] <= time_slice)
+                cout << p[i].id << "\t" << p[i].rt << "\t\t" << ct << "\t\t";
+                if (p[i].rt <= st)
                 {
-                    time_taken += remaining_burst_time[i];
-                    pro[i].comp_time = time_taken;
-                    remaining_burst_time[i] = 0;
+                    ct += p[i].rt;
+                    p[i].ct = ct;
+                    p[i].rt = 0;
                 }
                 else
                 {
-                    time_taken += time_slice;
-                    remaining_burst_time[i] -= time_slice;
+                    ct += st;
+                    p[i].rt -= st;
                 }
+                cout << ct << endl;
             }
         }
     }
-
     for (int i = 0; i < n; i++)
     {
-        pro[i].tat_time = pro[i].comp_time;
-        pro[i].wait_time = pro[i].tat_time - pro[i].burst_time;
-        // pro[i].resp_time = pro[i].wait_time;
+        p[i].tat = p[i].ct;
+        p[i].wt = p[i].tat - p[i].bt;
     }
+    cout << endl
+         << "Complete Table" << endl;
+    cout << "Pid\t\tArrival Time\tBurst Time\tResponse\tCompletion Time\tWaiting Time\tTurnaround Time " << endl;
+    int avg_tat = 0, avg_wt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cout << p[i].id << "\t\t" << p[i].at << "\t\t" << p[i].bt << "\t\t" << p[i].res
+             << "\t\t    " << p[i].ct << "\t\t    " << p[i].wt << "\t\t    " << p[i].tat << endl;
+        avg_tat += p[i].tat;
+        avg_wt += p[i].wt;
+    }
+    cout << endl
+         << "Average Turn Around Time = " << avg_tat / n << endl;
+    cout << "Average Wait Time = " << avg_wt / n << endl;
 }
 
 int main()
 {
-    int n;
-    cout << "Enter the number of processes: " << endl;
+    int n, slice;
+    cout << "Enter the number of processes: ";
     cin >> n;
-    cout << "Enter the time slice: " << endl;
-    cin >> time_slice;
-
-    process pro[n];
+    cout << "Enter slice time: ";
+    cin >> slice;
+    process p[n];
     for (int i = 0; i < n; i++)
     {
-        pro[i].id = i + 1;
-        cout << "Enter burst time of process " << i + 1 << ": " << endl;
-        cin >> pro[i].burst_time;
-        pro[i].comp_time = 0;
-        pro[i].tat_time = 0;
-        pro[i].wait_time = 0;
-        pro[i].resp_time = 0;
+        cout << "Enter process id " << i + 1 << " : ";
+        cin >> p[i].id;
+        cout << "Enter process " << p[i].id << "'s burst time: ";
+        cin >> p[i].bt;
+        p[i].at = 0;
+        p[i].wt = 0;
+        p[i].tat = 0;
+        p[i].ct = 0;
+        p[i].rt = p[i].bt;
     }
-
-    round_robin(pro, n);
-
-    cout << "Process\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\tResponse Time" << endl;
-    for (int i = 0; i < n; i++)
-    {
-        cout << pro[i].id << "\t" << pro[i].burst_time << "\t\t" << pro[i].comp_time << "\t\t" << pro[i].tat_time << "\t\t" << pro[i].wait_time << "\t\t" << pro[i].resp_time << endl;
-    }
-
+    rr(p, n, slice);
     return 0;
 }

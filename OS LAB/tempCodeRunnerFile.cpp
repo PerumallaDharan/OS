@@ -19,6 +19,14 @@ void round_robin(process pro[], int n)
         total += pro[i].burst_time;
     }
 
+    cout << endl
+         << "Gant Chart of the given processes" << endl;
+    cout << "Pid\t"
+         << "Remaining Time\t"
+         << "Start Time\t"
+         << "End Time" << endl;
+    cout << "---------------------------------------------" << endl;
+
     while (time_taken < total)
     {
         for (int i = 0; i < n; i++)
@@ -27,6 +35,8 @@ void round_robin(process pro[], int n)
                 pro[i].resp_time = time_taken;
             if (remaining_burst_time[i] > 0)
             {
+                cout << pro[i].id << "\t   " << remaining_burst_time[i] << "\t\t   " << time_taken << "\t\t   ";
+
                 if (remaining_burst_time[i] <= time_slice)
                 {
                     time_taken += remaining_burst_time[i];
@@ -38,24 +48,32 @@ void round_robin(process pro[], int n)
                     time_taken += time_slice;
                     remaining_burst_time[i] -= time_slice;
                 }
+                cout << time_taken << endl;
             }
         }
     }
 
+    int avg_tat = 0, avg_wt = 0;
     for (int i = 0; i < n; i++)
     {
         pro[i].tat_time = pro[i].comp_time;
         pro[i].wait_time = pro[i].tat_time - pro[i].burst_time;
         // pro[i].resp_time = pro[i].wait_time;
+        avg_tat += pro[i].tat_time;
+        avg_wt += pro[i].wait_time;
     }
+    cout << endl
+         << endl;
+    cout << "Average Turn Around Time = " << avg_tat / n << endl;
+    cout << "Average Wait Time = " << avg_wt / n << endl;
 }
 
 int main()
 {
     int n;
-    cout << "Enter the number of processes: " << endl;
+    cout << "Enter the number of processes " << endl;
     cin >> n;
-    cout << "Enter the time slice: " << endl;
+    cout << "Enter the time slice " << endl;
     cin >> time_slice;
 
     process pro[n];
@@ -71,12 +89,13 @@ int main()
     }
 
     round_robin(pro, n);
-
-    cout << "Process\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\tResponse Time" << endl;
+    cout << endl
+         << endl;
+    cout << "Process\t   Burst Time\t   Completion Time   \t  Turnaround Time   \t   Waiting Time   \t   Response Time" << endl;
     for (int i = 0; i < n; i++)
     {
-        cout << pro[i].id << "\t" << pro[i].burst_time << "\t\t" << pro[i].comp_time << "\t\t" << pro[i].tat_time << "\t\t" << pro[i].wait_time << "\t\t" << pro[i].resp_time << endl;
+        cout << "   " << pro[i].id << "\t     " << pro[i].burst_time << "\t\t\t    " << pro[i].comp_time
+             << "\t\t\t    " << pro[i].tat_time << "\t\t\t    " << pro[i].wait_time << "\t\t    " << pro[i].resp_time << endl;
     }
-
     return 0;
 }
