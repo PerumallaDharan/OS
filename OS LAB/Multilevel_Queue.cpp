@@ -15,295 +15,411 @@
 // 5. Student Processes                  :           Priority Scheduling
 
 #include <iostream>
-#include <climits>
-#include<vector>
 using namespace std;
 
+// A structure to represent a process
 struct Process
 {
-    int pid, burst_time, priority, process_type;
-    int turnaround_time, completion_time, wait_time;
+    int pid;
+    int type;
+    int burst_time;
+    int priority;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
 };
 
+// Structure for FCFS
+struct fcfs{
+    int pid;
+    int burst_time;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
+};
+
+// Structure for Round Robin time quantum 2
+struct rr2{
+    int pid;
+    int burst_time;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
+};
+
+// Structure for Round Robin time quantum 4
+struct rr4{
+    int pid;
+    int burst_time;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
+};
+
+// Structure for SJF
+struct sjf{
+    int pid;
+    int burst_time;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
+};
+
+// Structure for Priority
+struct priority{
+    int pid;
+    int burst_time;
+    int priority;
+    int completion_time;
+    int turn_around_time;
+    int wait_time;
+    int remaining_time;
+    int response_time;
+};
+
+// Function to find the waiting time for fcfs
+int dofcfs(fcfs f[], int fcfs_count,int time){
+    for (int i = 0; i < fcfs_count; i++)
+    {
+        f[i].completion_time=0;
+        f[i].turn_around_time=0;
+        f[i].wait_time=0;
+        f[i].response_time=0;
+        f[i].completion_time=time+f[i].burst_time;
+        time=f[i].completion_time;
+        f[i].turn_around_time=f[i].completion_time;
+        f[i].wait_time=f[i].turn_around_time-f[i].burst_time;
+        f[i].response_time=f[i].wait_time;
+    }
+    
+    // cout<<"FCFS"<<endl;
+    // cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\tResponse Time"<<endl;
+    for (int i = 0; i < fcfs_count; i++)
+    {
+        cout<<f[i].pid<<"\t"<<f[i].burst_time<<"\t\t"<<f[i].completion_time<<"\t\t"<<f[i].turn_around_time<<"\t\t\t"<<f[i].wait_time<<"\t\t"<<endl;
+    }
+    return time;
+}
+
+// Function to find the waiting time for Round Robin time quantum 2
+int dorr2(rr2 r2[], int rr2_count,int time){
+    for (int i = 0; i < rr2_count; i++)
+    {
+        r2[i].completion_time=0;
+        r2[i].turn_around_time=0;
+        r2[i].wait_time=0;
+        r2[i].response_time=0;
+        r2[i].remaining_time=r2[i].burst_time;
+    }
+    int flag=0;
+    while (flag==0)
+    {
+        flag=1;
+        for (int i = 0; i < rr2_count; i++)
+        {
+            if (r2[i].remaining_time>2)
+            {
+                time+=2;
+                r2[i].remaining_time-=2;
+                flag=0;
+            }
+            else if (r2[i].remaining_time>0)
+            {
+                time+=r2[i].remaining_time;
+                r2[i].remaining_time=0;
+                r2[i].completion_time=time;
+                r2[i].turn_around_time=r2[i].completion_time;
+                r2[i].wait_time=r2[i].turn_around_time-r2[i].burst_time;
+                r2[i].response_time=r2[i].wait_time;
+            }
+        }
+    }
+    // cout<<"Round Robin Time Quantum 2"<<endl;
+    // cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\tResponse Time"<<endl;
+    for (int i = 0; i < rr2_count; i++)
+    {
+        cout<<r2[i].pid<<"\t"<<r2[i].burst_time<<"\t\t"<<r2[i].completion_time<<"\t\t"<<r2[i].turn_around_time<<"\t\t\t"<<r2[i].wait_time<<"\t\t"<<endl;
+    }
+    return time;
+}
+
+// Function to find the waiting time for Round Robin time quantum 4
+int dorr4(rr4 r4[], int rr4_count, int time){
+    for (int i = 0; i < rr4_count; i++)
+    {
+        r4[i].completion_time=0;
+        r4[i].turn_around_time=0;
+        r4[i].wait_time=0;
+        r4[i].response_time=0;
+        r4[i].remaining_time=r4[i].burst_time;
+    }
+    int flag=0;
+    while (flag==0)
+    {
+        flag=1;
+        for (int i = 0; i < rr4_count; i++)
+        {
+            if (r4[i].remaining_time>4)
+            {
+                time+=4;
+                r4[i].remaining_time-=4;
+                flag=0;
+            }
+            else if (r4[i].remaining_time>0)
+            {
+                time+=r4[i].remaining_time;
+                r4[i].remaining_time=0;
+                r4[i].completion_time=time;
+                r4[i].turn_around_time=r4[i].completion_time;
+                r4[i].wait_time=r4[i].turn_around_time-r4[i].burst_time;
+                r4[i].response_time=r4[i].wait_time;
+            }
+        }
+    }
+    // cout<<"Round Robin Time Quantum 4"<<endl;
+    // cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\tResponse Time"<<endl;
+    for (int i = 0; i < rr4_count; i++)
+    {
+        cout<<r4[i].pid<<"\t"<<r4[i].burst_time<<"\t\t"<<r4[i].completion_time<<"\t\t"<<r4[i].turn_around_time<<"\t\t\t"<<r4[i].wait_time<<"\t\t"<<endl;
+    }
+    return time;
+}
+
+// Function to find the waiting time for SJF
+int dosjf(sjf s[], int sjf_count, int time){
+    for (int i = 0; i < sjf_count; i++)
+    {
+        s[i].completion_time=0;
+        s[i].turn_around_time=0;
+        s[i].wait_time=0;
+        s[i].response_time=0;
+        s[i].remaining_time=s[i].burst_time;
+    }
+    int flag=0;
+    while (flag==0)
+    {
+        flag=1;
+        for (int i = 0; i < sjf_count; i++)
+        {
+            if (s[i].remaining_time>0)
+            {
+                time+=s[i].remaining_time;
+                s[i].remaining_time=0;
+                s[i].completion_time=time;
+                s[i].turn_around_time=s[i].completion_time;
+                s[i].wait_time=s[i].turn_around_time-s[i].burst_time;
+                s[i].response_time=s[i].wait_time;
+            }
+        }
+    }
+    // cout<<"Shortest Job First"<<endl;
+    // cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\tResponse Time"<<endl;
+    for (int i = 0; i < sjf_count; i++)
+    {
+        cout<<s[i].pid<<"\t"<<s[i].burst_time<<"\t\t"<<s[i].completion_time<<"\t\t"<<s[i].turn_around_time<<"\t\t\t"<<s[i].wait_time<<"\t\t"<<endl;
+    }
+    return time;
+}
+
+// Function to find the waiting time for Priority
+int dopriority(priority p[], int priority_count,int time){
+    for (int i = 0; i < priority_count; i++)
+    {
+        p[i].completion_time=0;
+        p[i].turn_around_time=0;
+        p[i].wait_time=0;
+        p[i].response_time=0;
+        p[i].remaining_time=p[i].burst_time;
+    }
+    int flag=0;
+    while (flag==0)
+    {
+        flag=1;
+        for (int i = 0; i < priority_count; i++)
+        {
+            if (p[i].remaining_time>0)
+            {
+                time+=p[i].remaining_time;
+                p[i].remaining_time=0;
+                p[i].completion_time=time;
+                p[i].turn_around_time=p[i].completion_time;
+                p[i].wait_time=p[i].turn_around_time-p[i].burst_time;
+                p[i].response_time=p[i].wait_time;
+            }
+        }
+    }
+    // cout<<"Priority"<<endl;
+    // cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\tResponse Time"<<endl;
+    for (int i = 0; i < priority_count; i++)
+    {
+        cout<<p[i].pid<<"\t"<<p[i].burst_time<<"\t\t"<<p[i].completion_time<<"\t\t"<<p[i].turn_around_time<<"\t\t\t"<<p[i].wait_time<<"\t\t"<<endl;
+    }
+    return time;
+}
+
+// Function for gantt chart
+int table(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, int rr2_count, int rr4_count, int sjf_count, int priority_count, int n){
+    int time=0;
+    cout<<"Gantt Chart"<<endl;
+    cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\t"<<endl;
+    time=dofcfs(f,fcfs_count,time);
+    time=dorr2(r2,rr2_count,time);
+    time=dorr4(r4,rr4_count,time);
+    time=dosjf(s,sjf_count,time);
+    time=dopriority(p,priority_count,time);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout<<f[i].pid<<"\t"<<f[i].burst_time<<"\t\t"<<f[i].completion_time<<"\t\t"<<f[i].turn_around_time<<"\t\t\t"<<f[i].wait_time<<"\t\t"<<f[i].response_time<<endl;
+    // }
+    return 0;
+}
 int main()
 {
     int n;
-    cout << "Enter the total number of processes" << endl;
-    cin >> n;
-
-    Process pro[n];
-
-    for (int i = 0; i < n; i++)
+    cout<<"Enter the number of processes: ";	
+    cin>>n;
+    Process p[n];
+    for(int i=0;i<n;i++)
     {
-        cout << "Enter process ID" << endl;
-        cin >> pro[i].pid;
-
-        cout << "Enter the type of process (1. System, 2. Interactive, 3. Interactive Editing, 4. Batch, 5. Student)" << endl;
-        cin >> pro[i].process_type;
-
-        switch (pro[i].process_type)
+        cout<<"Enter the process ID: ";
+        cin>>p[i].pid;
+        cout<<"Enter the type of process: ";
+        cin>>p[i].type;
+        switch (p[i].type)
         {
         case 1:
-            cout << "Enter the burst time of the system process" << endl;
-            cin >> pro[i].burst_time;
+            cout<<"Enter the burst time: ";
+            cin>>p[i].burst_time;
             break;
-
         case 2:
-            cout << "Enter the burst time of the interactive process" << endl;
-            cin >> pro[i].burst_time;
+            cout<<"Enter the burst time: ";
+            cin>>p[i].burst_time;
             break;
-
         case 3:
-            cout << "Enter the burst time of the interactive editing process" << endl;
-            cin >> pro[i].burst_time;
+            cout<<"Enter the burst time: ";
+            cin>>p[i].burst_time;
             break;
-
         case 4:
-            cout << "Enter the burst time of the batch process" << endl;
-            cin >> pro[i].burst_time;
+            cout<<"Enter the burst time: ";
+            cin>>p[i].burst_time;
             break;
-
         case 5:
-            cout << "Enter the burst time of the student process" << endl;
-            cin >> pro[i].burst_time;
-
-            cout << "Enter the priority of the student process" << endl;
-            cin >> pro[i].priority;
+            cout<<"Enter the burst time: ";
+            cin>>p[i].burst_time;
+            cout<<"Enter the priority: ";	
+            cin>>p[i].priority;
             break;
-
         default:
             break;
         }
     }
-
-    int time = 0;
-    int total_time = 0;
-    int system_time = 0, interactive_time = 0, editing_time = 0, batch_time = 0, student_time = 0;
-    int system_count = 0, interactive_count = 0, editing_count = 0, batch_count = 0, student_count = 0;
-
-    // Queue for each level
-    Process system_q[n], interactive_q[n], editing_q[n], batch_q[n], student_q[n];
-    int system_front = 0, interactive_front = 0, editing_front = 0, batch_front = 0, student_front = 0;
-    int system_rear = -1, interactive_rear = -1, editing_rear = -1, batch_rear = -1, student_rear = -1;
-
-    while (true)
-    {
-        // Checking for completion
-        int count = 0;
-        for (int i = 0; i < n; i++)
-        {
-            if (pro[i].completion_time > 0)
-            {
-                count++;
-            }
-        }
-        if (count == n)
-        {
-            break;
-        }
-
-        // Adding processes to appropriate queue based on process type
-        for (int i = 0; i < n; i++)
-        {
-            if (pro[i].burst_time > 0 && pro[i].completion_time == 0)
-            {
-                switch (pro[i].process_type)
-                {
-                case 1:
-                    system_rear++;
-                    system_q[system_rear] = pro[i];
-                    system_count++;
-                    break;
-                case 2:
-                    interactive_rear++;
-                    interactive_q[interactive_rear] = pro[i];
-                    interactive_count++;
-                    break;
-                case 3:
-                    editing_rear++;
-                    editing_q[editing_rear] = pro[i];
-                    editing_count++;
-                    break;
-                case 4:
-                    batch_rear++;
-                    batch_q[batch_rear] = pro[i];
-                    batch_count++;
-                    break;
-                case 5:
-                    student_rear++;
-                    student_q[student_rear] = pro[i];
-                    student_count++;
-                    break;
-                default:
-                    break;
-                }
-            }
-        }
-        // Running processes from highest priority to lowest
-        if (system_count > 0)
-        {
-            int time_quantum = system_q[system_front].burst_time;
-            if (time_quantum > system_count)
-            {
-                time_quantum = system_count;
-            }
-            for (int i = 0; i < time_quantum; i++)
-            {
-                system_q[system_front].burst_time--;
-                system_time++;
-                time++;
-            }
-            if (system_q[system_front].burst_time == 0)
-            {
-                pro[system_q[system_front].pid - 1].completion_time = time;
-                pro[system_q[system_front].pid - 1].turnaround_time = pro[system_q[system_front].pid - 1].completion_time;
-                pro[system_q[system_front].pid - 1].wait_time = pro[system_q[system_front].pid - 1].turnaround_time - system_q[system_front].burst_time;
-                system_front++;
-                system_count--;
-            }
-        }
-        else if (interactive_count > 0)
-        {
-            int time_quantum = 2;
-            if (time_quantum > interactive_count)
-            {
-                time_quantum = interactive_count;
-            }
-            for (int i = 0; i < time_quantum; i++)
-            {
-                interactive_q[interactive_front].burst_time--;
-                interactive_time++;
-                time++;
-            }
-            if (interactive_q[interactive_front].burst_time == 0)
-            {
-                pro[interactive_q[interactive_front].pid - 1].completion_time = time;
-                pro[interactive_q[interactive_front].pid - 1].turnaround_time = pro[interactive_q[interactive_front].pid - 1].completion_time;
-                pro[interactive_q[interactive_front].pid - 1].wait_time = pro[interactive_q[interactive_front].pid - 1].turnaround_time - interactive_q[interactive_front].burst_time;
-                interactive_front++;
-                interactive_count--;
-            }
-            else
-            {
-                interactive_rear++;
-                interactive_q[interactive_rear] = interactive_q[interactive_front];
-                interactive_front++;
-            }
-        }
-        else if (editing_count > 0)
-        {
-            int time_quantum = 4;
-            if (time_quantum > editing_count)
-            {
-                time_quantum = editing_count;
-            }
-            for (int i = 0; i < time_quantum; i++)
-            {
-                editing_q[editing_front].burst_time--;
-                editing_time++;
-                time++;
-            }
-            if (editing_q[editing_front].burst_time == 0)
-            {
-                pro[editing_q[editing_front].pid - 1].completion_time = time;
-                pro[editing_q[editing_front].pid - 1].turnaround_time = pro[editing_q[editing_front].pid - 1].completion_time;
-                pro[editing_q[editing_front].pid - 1].wait_time = pro[editing_q[editing_front].pid - 1].turnaround_time - editing_q[editing_front].burst_time;
-                editing_front++;
-                editing_count--;
-            }
-            else
-            {
-                editing_rear++;
-                editing_q[editing_rear] = editing_q[editing_front];
-                editing_front++;
-            }
-        }
-        else if (batch_count > 0)
-        {
-            int min_burst_time = INT_MAX;
-            int min_burst_time_index = -1;
-            for (int i = 0; i < batch_count; i++)
-            {
-                if (batch_q[i].burst_time < min_burst_time)
-                {
-                    min_burst_time = batch_q[i].burst_time;
-                    min_burst_time_index = i;
-                }
-            }
-            for (int i = 0; i < min_burst_time; i++)
-            {
-                batch_q[min_burst_time_index].burst_time--;
-                batch_time++;
-                time++;
-            }
-            if (batch_q[min_burst_time_index].burst_time == 0)
-            {
-                pro[batch_q[min_burst_time_index].pid - 1].completion_time = time;
-                pro[batch_q[min_burst_time_index].pid - 1].turnaround_time = pro[batch_q[min_burst_time_index].pid - 1].completion_time;
-                pro[batch_q[min_burst_time_index].pid - 1].wait_time = pro[batch_q[min_burst_time_index].pid - 1].turnaround_time - batch_q[min_burst_time_index].burst_time;
-                for (int i = min_burst_time_index; i < batch_count - 1; i++)
-                {
-                    batch_q[i] = batch_q[i + 1];
-                }
-                batch_count--;
-            }
-        }
-        else if (student_count > 0)
-        {
-            int max_priority = INT_MIN;
-            int max_priority_index = -1;
-            for (int i = 0; i < student_count; i++)
-            {
-                if (student_q[i].priority > max_priority)
-                {
-                    max_priority = student_q[i].priority;
-                    max_priority_index = i;
-                }
-            }
-            for (int i = 0; i < student_q[max_priority_index].burst_time; i++)
-            {
-                student_q[max_priority_index].burst_time--;
-                student_time++;
-                time++;
-            }
-            if (student_q[max_priority_index].burst_time == 0)
-            {
-                pro[student_q[max_priority_index].pid - 1].completion_time = time;
-                pro[student_q[max_priority_index].pid - 1].turnaround_time = pro[student_q[max_priority_index].pid - 1].completion_time;
-                pro[student_q[max_priority_index].pid - 1].wait_time = pro[student_q[max_priority_index].pid - 1].turnaround_time - student_q[max_priority_index].burst_time;
-                for (int i = max_priority_index; i < student_count - 1; i++)
-                {
-                    student_q[i] = student_q[i + 1];
-                }
-                student_count--;
-            }
-        }
-        else
-        {
-            time++;
-        }
-    }
-
-    // Calculating averages
-    float avg_tat_time = 0, avg_wait_time = 0;
+    
+    // Counting the number of processes of each type
+    int fcfs_count=0;
+    int rr2_count=0;
+    int rr4_count=0;
+    int sjf_count=0;
+    int priority_count=0;
     for (int i = 0; i < n; i++)
     {
-        avg_tat_time += pro[i].turnaround_time;
-        avg_wait_time += pro[i].wait_time;
+        if (p[i].type==1)
+        {
+            fcfs_count++;
+        }
+        else if (p[i].type==2)
+        {
+            rr2_count++;
+        }
+        else if (p[i].type==3)
+        {
+            rr4_count++;
+        }
+        else if (p[i].type==4)
+        {
+            sjf_count++;
+        }
+        else if (p[i].type==5)
+        {
+            priority_count++;
+        }
     }
-    avg_tat_time /= n;
-    avg_wait_time /= n;
 
-    // Printing Gantt Chart
-    cout << "\nGantt Chart:\n";
-    vector<Process> gantt;
-    for (int i = 0; i < gantt.size(); i++)
+    // Creating arrays for each type of process
+    fcfs f[fcfs_count];
+    rr2 r2[rr2_count];
+    rr4 r4[rr4_count];
+    sjf s[sjf_count];
+    priority pr[priority_count];
+
+    int n1=0, n2=0, n3=0, n4=0, n5=0;
+    // Copying the processes of each type to their respective arrays
+    for (int i = 0; i < n; i++)
     {
-        cout << "|" << gantt[i].pid << "|";
+        if(p[i].type==1){
+            f[n1].pid=p[i].pid;
+            f[n1].burst_time= p[i].burst_time;
+            n1++;
+            // f[i].completion_time=0;
+            // f[i].turn_around_time=0;
+            // f[i].wait_time=0;
+            // f[i].remaining_time=f[i].burst_time;
+        }
+        else if (p[i].type==2)
+        {
+            r2[n2].pid=p[i].pid;
+            r2[n2].burst_time=p[i].burst_time;
+            n2++;
+            // r2[i].completion_time=0;
+            // r2[i].turn_around_time=0;
+            // r2[i].wait_time=0;
+            // r2[i].remaining_time=r2[i].burst_time;
+        }
+        else if (p[i].type==3)
+        {
+            r4[n3].pid=p[i].pid;
+            r4[n3].burst_time=p[i].burst_time;
+            n3++;
+            // r4[i].completion_time=0;
+            // r4[i].turn_around_time=0;
+            // r4[i].wait_time=0;
+            // r4[i].remaining_time=r4[i].burst_time;
+        }
+        else if (p[i].type==4)
+        {
+            s[n4].pid=p[i].pid;
+            s[n4].burst_time=p[i].burst_time;
+            n4++;
+            // s[i].completion_time=0;
+            // s[i].turn_around_time=0;
+            // s[i].wait_time=0;
+            // s[i].remaining_time=s[i].burst_time;
+        }
+        else if (p[i].type==5)
+        {
+            pr[i].pid=p[n5].pid;
+            pr[i].burst_time=p[n5].burst_time;
+            pr[i].priority=p[n5].priority;
+            n5++;
+            // pr[i].completion_time=0;
+            // pr[i].turn_around_time=0;
+            // pr[i].wait_time=0;
+            // pr[i].remaining_time=pr[i].burst_time;
+        }  
     }
-    cout << "\n\n";
-
-    // Printing process details
-    // cout << "PID\tType\tBurst Time\tPriority\tCompletion Time\tTurnaround Time\tWait Time\n";
-    // for (
+    
+    table(f,r2,r4,s,pr,fcfs_count,rr2_count,rr4_count,sjf_count,priority_count,n);
+    
+    return 0;
 }
+
+
