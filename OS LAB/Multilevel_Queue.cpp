@@ -267,10 +267,11 @@ int dopriority(priority p[], int priority_count,int time){
     return time;
 }
 
-// Function for gantt chart
+// Function for table
 int table(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, int rr2_count, int rr4_count, int sjf_count, int priority_count, int n){
     int time=0;
-    cout<<"Gantt Chart"<<endl;
+    cout<<endl;
+    cout<<"Table"<<endl;
     cout<<"PID\tBurst Time\tCompletion Time\tTurn Around Time\tWait Time\t"<<endl;
     time=dofcfs(f,fcfs_count,time);
     time=dorr2(r2,rr2_count,time);
@@ -281,8 +282,11 @@ int table(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, i
     // {
     //     cout<<f[i].pid<<"\t"<<f[i].burst_time<<"\t\t"<<f[i].completion_time<<"\t\t"<<f[i].turn_around_time<<"\t\t\t"<<f[i].wait_time<<"\t\t"<<f[i].response_time<<endl;
     // }
+    
     return 0;
 }
+
+
 int main()
 {
     int n;
@@ -291,6 +295,7 @@ int main()
     Process p[n];
     for(int i=0;i<n;i++)
     {
+        cout<<endl;
         cout<<"Enter the process ID: ";
         cin>>p[i].pid;
         cout<<"Enter the type of process: ";
@@ -406,9 +411,9 @@ int main()
         }
         else if (p[i].type==5)
         {
-            pr[i].pid=p[n5].pid;
-            pr[i].burst_time=p[n5].burst_time;
-            pr[i].priority=p[n5].priority;
+            pr[n5].pid=p[i].pid;
+            pr[n5].burst_time=p[i].burst_time;
+            pr[n5].priority=p[i].priority;
             n5++;
             // pr[i].completion_time=0;
             // pr[i].turn_around_time=0;
