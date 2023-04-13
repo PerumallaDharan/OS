@@ -1,15 +1,20 @@
+// Including the required header files
 #include <iostream>
 using namespace std;
 
+// Declaring the global variables
 int time_slice;
 
+// Defining the structure for the process
 struct process
 {
     int id, burst_time, comp_time, wait_time, tat_time, resp_time;
 };
 
+// Defining the function for the round robin scheduling
 void round_robin(process pro[], int n)
 {
+    // Defining the variables
     int time_taken = 0;
     int total = 0;
     int remaining_burst_time[n];
@@ -19,6 +24,7 @@ void round_robin(process pro[], int n)
         total += pro[i].burst_time;
     }
 
+    // Printing the gant chart
     cout << endl
          << "Gant Chart of the given processes" << endl;
     cout << "Pid\t"
@@ -27,6 +33,7 @@ void round_robin(process pro[], int n)
          << "End Time" << endl;
     cout << "---------------------------------------------" << endl;
 
+    // Calculating the completion time, turn around time and wait time
     while (time_taken < total)
     {
         for (int i = 0; i < n; i++)
@@ -53,6 +60,7 @@ void round_robin(process pro[], int n)
         }
     }
 
+    // Calculating the turn around time and wait time
     int avg_tat = 0, avg_wt = 0;
     for (int i = 0; i < n; i++)
     {
@@ -64,18 +72,22 @@ void round_robin(process pro[], int n)
     }
     cout << endl
          << endl;
+    // Printing the average turn around time and average wait time
     cout << "Average Turn Around Time = " << avg_tat / n << endl;
     cout << "Average Wait Time = " << avg_wt / n << endl;
 }
 
+// Defining the main function
 int main()
 {
+    // Defining the variables
     int n;
     cout << "Enter the number of processes " << endl;
     cin >> n;
     cout << "Enter the time slice " << endl;
     cin >> time_slice;
 
+    // Taking the input of the burst time of the processes
     process pro[n];
     for (int i = 0; i < n; i++)
     {
@@ -88,6 +100,7 @@ int main()
         pro[i].resp_time = 0;
     }
 
+    // Calling the round robin function
     round_robin(pro, n);
     cout << endl
          << endl;

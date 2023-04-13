@@ -267,6 +267,136 @@ int dopriority(priority p[], int priority_count,int time){
     return time;
 }
 
+// Function to print the gannt chart of fcfs
+int fcfs_gannt(fcfs f[], int fcfs_count){
+    //Printing the Gantt Chart
+    cout<<endl;
+    cout<<"Gantt Chart"<<endl;
+    cout<<"|";
+    for (int i = 0; i < fcfs_count; i++)
+    {
+        cout<<"P"<<f[i].pid<<"|";
+    }
+    // cout<<endl;
+    // cout<<0;
+    // for (int i = 0; i < fcfs_count; i++)
+    // {
+    //     cout<<"  "<<f[i].completion_time;
+    // }
+    // cout<<endl;
+    return 0;
+}
+
+// Function to print the gannt chart of rr2
+int rr2_gannt(rr2 r2[], int rr2_count){
+    //Printing the Gantt Chart
+    // cout<<endl;
+    // cout<<"Gantt Chart"<<endl;
+    //cout<<"|";
+    for (int i = 0; i < rr2_count; i++)
+    {
+        cout<<"P"<<r2[i].pid<<"|";
+    }
+    // cout<<endl;
+    // cout<<0;
+    // for (int i = 0; i < rr2_count; i++)
+    // {
+    //     cout<<"  "<<r2[i].completion_time;
+    // }
+    // cout<<endl;
+    return 0;
+}
+
+// Function to print the gannt chart of rr4
+int rr4_gannt(rr4 r4[], int rr4_count){
+    //Printing the Gantt Chart
+    // cout<<endl;
+    // cout<<"Gantt Chart"<<endl;
+    //cout<<"|";
+    for (int i = 0; i < rr4_count; i++)
+    {
+        cout<<"P"<<r4[i].pid<<"|";
+    }
+    // cout<<endl;
+    // cout<<0;
+    // for (int i = 0; i < rr4_count; i++)
+    // {
+    //     cout<<"  "<<r4[i].completion_time;
+    // }
+    // cout<<endl;
+    return 0;
+}
+
+// Function to print the gannt chart of sjf
+int sjf_gannt(sjf s[], int sjf_count){
+    //Printing the Gantt Chart
+    //cout<<endl;
+    //cout<<"Gantt Chart"<<endl;
+    //cout<<"|";
+    for (int i = 0; i < sjf_count; i++)
+    {
+        cout<<"P"<<s[i].pid<<"|";
+    }
+    // cout<<endl;
+    // cout<<0;
+    // for (int i = 0; i < sjf_count; i++)
+    // {
+    //     cout<<"  "<<s[i].completion_time;
+    // }
+    //cout<<endl;
+    return 0;
+}
+
+// Function to print the gannt chart of priority
+int priority_gannt(priority p[], int priority_count){
+    //Printing the Gantt Chart
+    // cout<<endl;
+    // cout<<"Gantt Chart"<<endl;
+    //cout<<"|";
+    for (int i = 0; i < priority_count; i++)
+    {
+        cout<<"P"<<p[i].pid<<"|";
+    }
+    // cout<<endl;
+    // cout<<0;
+    // for (int i = 0; i < priority_count; i++)
+    // {
+    //     cout<<"  "<<p[i].completion_time;
+    // }
+    // cout<<endl;
+    return 0;
+}
+
+// Function to print time in ganntchart
+int time_gannt(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, int rr2_count, int rr4_count, int sjf_count, int priority_count){
+    cout<<endl;
+    cout<<0;
+    for (int i = 0; i < fcfs_count; i++)
+    {
+        cout<<"  "<<f[i].completion_time;
+    }
+    for (int i = 0; i < rr2_count; i++)
+    {
+        cout<<"  "<<r2[i].completion_time;
+    }
+    for (int i = 0; i < rr4_count; i++)
+    {
+        cout<<"  "<<r4[i].completion_time;
+    }
+    for (int i = 0; i < sjf_count; i++)
+    {
+        cout<<"  "<<s[i].completion_time;
+    }
+    for (int i = 0; i < priority_count; i++)
+    {
+        cout<<"  "<<p[i].completion_time;
+    }
+    cout<<endl;
+    return 0;
+}
+
+// 
+
 // Function for table
 int table(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, int rr2_count, int rr4_count, int sjf_count, int priority_count, int n){
     int time=0;
@@ -282,9 +412,17 @@ int table(fcfs f[], rr2 r2[], rr4 r4[], sjf s[], priority p[], int fcfs_count, i
     // {
     //     cout<<f[i].pid<<"\t"<<f[i].burst_time<<"\t\t"<<f[i].completion_time<<"\t\t"<<f[i].turn_around_time<<"\t\t\t"<<f[i].wait_time<<"\t\t"<<f[i].response_time<<endl;
     // }
-    
+
+    fcfs_gannt(f,fcfs_count);
+    rr2_gannt(r2,rr2_count);
+    rr4_gannt(r4,rr4_count);
+    sjf_gannt(s,sjf_count);
+    priority_gannt(p,priority_count);
+    time_gannt(f,r2,r4,s,p,fcfs_count,rr2_count,rr4_count,sjf_count,priority_count);
     return 0;
 }
+
+
 
 
 int main()
@@ -426,5 +564,3 @@ int main()
     
     return 0;
 }
-
-
