@@ -1,17 +1,14 @@
+// Initialising the header files
 #include <iostream>
 using namespace std;
 
+// Creating a structure for the process
 struct process
 {
     int id, burst_time, wait_time, comp_time, tat_time, priority;
-    //process *next;
 };
 
-bool compare(process p1, process p2)
-{
-    return p1.priority < p2.priority;
-}
-
+// Function to display the process
 void display(process p[], int n)
 {
     cout << "PID\tBT\tCT\tTAT\tWT" << endl;
@@ -22,6 +19,7 @@ void display(process p[], int n)
     }
 }
 
+// Function to implement the priority scheduling
 void priority(process pro[], int n)
 {
     for (int i = 0; i < n; i++)
@@ -29,7 +27,7 @@ void priority(process pro[], int n)
         int min = i;
         for (int j = i + 1; j < n; j++)
         {
-            if (compare(pro[j], pro[min]))
+            if (pro[j].priority< pro[min].priority)
             {
                 min = j;
             }
@@ -50,16 +48,18 @@ void priority(process pro[], int n)
 
 int main()
 {
+    // Taking the number of process
     int n;
     cout << "Enter number of process = " << endl;
     cin >> n;
     process pro[n];
     for (int i = 0; i < n; i++)
     {
-        pro[i].id = i + 1;
-        cout << "Enter burst time of process " << i + 1 << endl;
+        cout<<"Enter the process id = "<<endl;
+        cin >> pro[i].id;
+        cout << "Enter burst time of process = ";
         cin >> pro[i].burst_time;
-        cout << "Enter the priority of the process " << endl;
+        cout << "Enter the priority of the process = ";
         cin >> pro[i].priority;
         pro[i].comp_time = 0;
         pro[i].tat_time = 0;
