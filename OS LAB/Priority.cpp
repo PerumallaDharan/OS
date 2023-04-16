@@ -14,8 +14,8 @@ void display(process p[], int n)
     cout << "PID\tBT\tCT\tTAT\tWT" << endl;
     for (int i = 0; i < n; i++)
     {
-        cout << p[i].id << "\t" << p[i].burst_time << "\t" 
-        << p[i].comp_time << "\t" << p[i].tat_time << "\t" << p[i].wait_time << endl;
+        cout << p[i].id << "\t" << p[i].burst_time << "\t"
+             << p[i].comp_time << "\t" << p[i].tat_time << "\t" << p[i].wait_time << endl;
     }
 }
 
@@ -27,7 +27,7 @@ void priority(process pro[], int n)
         int min = i;
         for (int j = i + 1; j < n; j++)
         {
-            if (pro[j].priority< pro[min].priority)
+            if (pro[j].priority < pro[min].priority)
             {
                 min = j;
             }
@@ -40,7 +40,7 @@ void priority(process pro[], int n)
     {
         pro[i].wait_time = total;
         pro[i].tat_time = pro[i].wait_time + pro[i].burst_time;
-        pro[i].comp_time = total+pro[i].burst_time;
+        pro[i].comp_time = total + pro[i].burst_time;
         total = total + pro[i].burst_time;
     }
     display(pro, n);
@@ -55,7 +55,7 @@ int main()
     process pro[n];
     for (int i = 0; i < n; i++)
     {
-        cout<<"Enter the process id = "<<endl;
+        cout << "Enter the process id = " << endl;
         cin >> pro[i].id;
         cout << "Enter burst time of process = ";
         cin >> pro[i].burst_time;

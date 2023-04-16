@@ -65,6 +65,16 @@ void priority(process pro[], int n)
 
         current_time++;
     }
+    cout << "Process\t\tBT\t\tAT\t\tCompletion Time\t\tWait Time\t\tTurnaround Time\t\t Priority" << endl;
+    cout << "-------\t\t---\t\t---\t\t--------------\t\t---------\t\t---------------\t\t----------" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        cout << pro[i].id << "\t\t" << pro[i].b_time << "\t\t"
+             << pro[i].a_time << "\t\t  " << pro[i].comp_time << "\t\t\t   "
+             << pro[i].wait_time << "\t\t\t   " << pro[i].tat_time
+             << "\t\t\t   " << pro[i].priority << endl;
+    }
+    cout << "-------\t\t---\t\t---\t\t--------------\t\t---------\t\t---------------\t\t----------" << endl;
 }
 
 int main()
@@ -92,16 +102,6 @@ int main()
 
     priority(pro, n);
 
-    cout << "Process\t\tBT\t\tAT\t\tCompletion Time\t\tWait Time\t\tTurnaround Time\t\t Priority" << endl;
-    cout << "-------\t\t---\t\t---\t\t--------------\t\t---------\t\t---------------\t\t----------" << endl;
-    for (int i = 0; i < n; i++)
-    {
-        cout << pro[i].id << "\t\t" << pro[i].b_time << "\t\t"
-             << pro[i].a_time << "\t\t  " << pro[i].comp_time << "\t\t\t   "
-             << pro[i].wait_time << "\t\t\t   " << pro[i].tat_time
-             << "\t\t\t   " << pro[i].priority << endl;
-    }
-    cout << "-------\t\t---\t\t---\t\t--------------\t\t---------\t\t---------------\t\t----------" << endl;
 
     return 0;
 }
