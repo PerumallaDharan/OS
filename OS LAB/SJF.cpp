@@ -4,14 +4,14 @@ struct process
 {
     int id;
     int bt;
-    int waiting_time=0;
-    int turnaround_time=0;
-    int completion_time=0;
+    int waiting_time;
+    int turnaround_time;
+    int completion_time;
 };
-bool compare(process p1, process p2)
-{
-    return p1.bt < p2.bt;
-}
+// bool compare(process p1, process p2)
+// {
+//     return p1.bt < p2.bt;
+// }
 void sjf(process pro[], int n)
 {
     for (int i = 0; i < n - 1; i++)
