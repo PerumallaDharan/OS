@@ -4,7 +4,6 @@ using namespace std;
 struct process
 {
     int id, a_time, b_time, comp_time, wait_time, tat_time, priority, rem_time;
-    process *next;
 };
 
 bool compare(process p1, process p2)
@@ -36,26 +35,33 @@ void priority(process pro[], int n)
     int current_time = 0;
     while (current_time <= total_time)
     {
+        // index of the process with highest priority
         int highest_priority_idx = -1;
         int highest_priority = INT_MAX;
 
+        // find the process with highest priority
         for (int i = 0; i < n; i++)
         {
+            // check if the process has arrived and has remaining time
             if (pro[i].a_time <= current_time && pro[i].rem_time > 0 && pro[i].priority < highest_priority)
             {
+                // update the highest priority process
                 highest_priority_idx = i;
                 highest_priority = pro[i].priority;
             }
         }
 
+        // if no process has arrived yet
         if (highest_priority_idx == -1)
         {
             current_time++;
             continue;
         }
 
+        // reduce the remaining time of the process
         pro[highest_priority_idx].rem_time--;
 
+        // if the process has completed execution
         if (pro[highest_priority_idx].rem_time == 0)
         {
             pro[highest_priority_idx].comp_time = current_time + 1;
@@ -83,16 +89,13 @@ int main()
     cout << "Enter the number of processes " << endl;
     cin >> n;
     process pro[n];
-
     for (int i = 0; i < n; i++)
     {
         pro[i].id = i + 1;
         cout << "Enter the arrival time for process " << i + 1 << endl;
         cin >> pro[i].a_time;
-
         cout << "Enter the burst time for process " << i + 1 << endl;
         cin >> pro[i].b_time;
-
         pro[i].comp_time = 0;
         pro[i].tat_time = 0;
         pro[i].wait_time = 0;
