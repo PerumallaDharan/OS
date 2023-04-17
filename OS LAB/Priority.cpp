@@ -38,10 +38,14 @@ void priority(process pro[], int n)
     int total = 0;
     for (int i = 0; i < n; i++)
     {
-        pro[i].wait_time = total;
-        pro[i].tat_time = pro[i].wait_time + pro[i].burst_time;
-        pro[i].comp_time = total + pro[i].burst_time;
-        total = total + pro[i].burst_time;
+        // pro[i].wait_time = total;
+        // pro[i].tat_time = pro[i].wait_time + pro[i].burst_time;
+        // pro[i].comp_time = total + pro[i].burst_time;
+        // total = total + pro[i].burst_time;
+        total += pro[i].burst_time;
+        pro[i].comp_time = total;
+        pro[i].tat_time = pro[i].comp_time;
+        pro[i].wait_time = pro[i].tat_time - pro[i].burst_time;
     }
     display(pro, n);
 }
