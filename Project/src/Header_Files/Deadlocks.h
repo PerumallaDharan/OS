@@ -11,11 +11,13 @@ using namespace std;
 
 int deadlocks_menu(){
     int n;
+    cout << "----------------------------------------------------------------------------------------------------------" << endl;
     cout << "-----------------------------------------Semaphores and Deadlocks-----------------------------------------" << endl;
-    cout << "                                   Choose any one of the following" << endl;
-    cout << "                                   1. Producer Consumer Problem using Semaphores" << endl;
-    cout << "                                   2. Bankers Algorithm" << endl;
-    cout << "                                   3. Exit" << endl;
+    cout << "----------------------------------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\tChoose any one of the following" << endl;
+    cout << "\t\t\t\t\t1. Producer Consumer Problem using Semaphores" << endl;
+    cout << "\t\t\t\t\t2. Bankers Algorithm" << endl;
+    cout << "\t\t\t\t\t3. Exit" << endl;
     cout << "Enter your choice: ";
     cin >> n;
     system("cls");

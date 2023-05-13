@@ -18,14 +18,16 @@ using namespace std;
 int cpu_menu()
 {
     int n;
+    cout << "-----------------------------------------------------------------------------------------------------------" << endl;
     cout << "-----------------------------------------CPU Scheduling Algorithms-----------------------------------------" << endl;
-    cout << "                                   Choose any one of the following" << endl;
-    cout << "                                   1. FCFS" << endl;
-    cout << "                                   2. SJF" << endl;
-    cout << "                                   3. Priority" << endl;
-    cout << "                                   4. Preemptive Priority (Priority is assigned randomly)" << endl;
-    cout << "                                   5. Round Robin" << endl;
-    cout << "                                   6. Exit" << endl;
+    cout << "-----------------------------------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\tChoose any one of the following" << endl;
+    cout << "\t\t\t\t\t1. FCFS" << endl;
+    cout << "\t\t\t\t\t2. SJF" << endl;
+    cout << "\t\t\t\t\t3. Priority" << endl;
+    cout << "\t\t\t\t\t4. Preemptive Priority (Priority is assigned randomly)" << endl;
+    cout << "\t\t\t\t\t5. Round Robin" << endl;
+    cout << "\t\t\t\t\t6. Exit" << endl;
     cout << "Enter your choice: ";
     cin >> n;
     system("cls");

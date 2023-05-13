@@ -16,13 +16,15 @@ using namespace std;
 int disc_menu()
 {
     int n;
+    cout << "------------------------------------------------------------------------------------------------------------" << endl;
     cout << "-----------------------------------------Disk Scheduling Algorithms-----------------------------------------" << endl;
-    cout << "                                   Choose any one of the following" << endl;
-    cout << "                                   1. FCFS" << endl;
-    cout << "                                   2. SSTF" << endl;
-    cout << "                                   3. SCAN" << endl;
-    cout << "                                   4. LOOK" << endl;
-    cout << "                                   5. Exit" << endl;
+    cout << "------------------------------------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\tChoose any one of the following" << endl;
+    cout << "\t\t\t\t\t1. FCFS" << endl;
+    cout << "\t\t\t\t\t2. SSTF" << endl;
+    cout << "\t\t\t\t\t3. SCAN" << endl;
+    cout << "\t\t\t\t\t4. LOOK" << endl;
+    cout << "\t\t\t\t\t5. Exit" << endl;
     cout << "Enter your choice: ";
     cin >> n;
     system("cls");
