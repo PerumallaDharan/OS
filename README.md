@@ -20,7 +20,7 @@ The repository includes the following:
 - [Round Robin](https://github.com/PerumallaDharan/Operating_Systems/blob/master/OS%20LAB/Round_Robin.cpp)
 - [Resource Request](https://github.com/PerumallaDharan/Operating_Systems/blob/master/OS%20LAB/Resource_Request.cpp)
 - [Page Replacement Simulation FIFO](https://github.com/PerumallaDharan/Operating_Systems/blob/master/OS%20LAB/Page_Replacement_Simulation.cpp)
-- [Page Replacement Simulation LRU]()
+- [Page Replacement Simulation LRU](https://github.com/PerumallaDharan/Operating_Systems/blob/master/OS%20LAB/LRU.cpp)
 
 <hr />
 
